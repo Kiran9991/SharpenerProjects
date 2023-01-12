@@ -21,3 +21,5 @@ var li = document.getElementsByTagName('li');
 li[1].style.backgroundColor = 'green';
 li[2].textContent = '';
  
+
+
