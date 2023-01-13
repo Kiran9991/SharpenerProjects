@@ -13,9 +13,10 @@
 //     li[i].style.backgroundColor = 'yellow';
 // }
 var li = document.getElementsByTagName('li');
-li[2].style.color = 'green';
-for(var i=0; i<li.length; i++) {
-    li[i].style.fontWeight = 'bold';
-    li[i].style.backgroundColor = 'yellow';
-}
- 
+// li[2].style.color = 'green';
+// for(var i=0; i<li.length; i++) {
+//     li[i].style.fontWeight = 'bold';
+//     li[i].style.backgroundColor = 'yellow';
+// }
+li[1].style.backgroundColor = 'green';
+li[2].textContent = '';
