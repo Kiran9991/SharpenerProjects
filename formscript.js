@@ -6,58 +6,47 @@ const myForm = document.querySelector('#my-form');
 // let emailInput = document.getElementById('email').value;
 
 // Listen for form submit
-var itemlist = document.getElementById('items');
 myForm.addEventListener('submit', onSubmit);
-
-// Create event of removing itemlist
-itemlist.addEventListener('click', removeItem);
 
 // Created a submit function
 function onSubmit(e) {
   e.preventDefault();
-//   Get input value
-  var newName = document.getElementById('name');
-  var newEmail = document.getElementById('email');
-
-//   create li tag
+  let username = document.getElementById('name').value
+  let useremail = document.getElementById('email').value
+  let userphonenumber = document.getElementById('phoneNumber').value
+  var itemlist = document.getElementById('items');
   var li = document.createElement('li');
-//   add class to li tag
-  li.className = 'list-group-item';
-//   adding textnode to li
-  li.appendChild(document.createTextNode(newName.value));
-  li.appendChild(document.createTextNode(' '+newEmail.value));
-//   adding li tag to list
-  itemlist.appendChild(li);
 
-// Create delete button element
-  var deletebtn = document.createElement('button');
-
-// Add classes to del button
-  deletebtn.className = 'delete';
-
-// Append text node
-  deletebtn.appendChild(document.createTextNode('delete'));
+// Creating obj
+const userDetails = {
+    name: username,
+    email: useremail,
+    phoneNumber: userphonenumber
+  }
+  li.textContent = userDetails.name+' - '+userDetails.email+' - '+userDetails.phoneNumber
+  var deletebtn = document.createElement('input');
+  deletebtn.type = 'button';
+  deletebtn.value = 'delete'
+  deletebtn.onclick = () => {
+    localStorage.removeItem(userDetails.email)
+    itemlist.removeChild(li)
+  }
+  let editbtn = document.createElement('input')
+  editbtn.type = 'button'
+  editbtn.value = 'edit'
+  editbtn.onclick = () => {
+    localStorage.removeItem(userDetails.email)
+    itemlist.removeChild(li)
+    name.value = userDetails.name
+    email.value = userDetails.email
+    phoneNumber.value = userDetails.phoneNumber
+  }
 
 // Append button to li
   li.appendChild(deletebtn);
+  li.appendChild(editbtn)
+  itemlist.appendChild(li);
 
-// Creating obj
-  const userDetails = {
-  name: document.getElementById('name').value,
-  email: document.getElementById('email').value
-}
   localStorage.setItem(userDetails.email, JSON.stringify(userDetails));
 }
 
-// Remove Item
-function removeItem(e) {
-    if(e.target.classList.contains('delete')) {
-        var li = e.target.parentElement;
-        itemlist.removeChild(li);
-        const userDetails = {
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value
-          }
-        localStorage.removeItem(userDetails.email);
-    }
-}
