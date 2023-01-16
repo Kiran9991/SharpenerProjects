@@ -7,8 +7,10 @@ const myForm = document.querySelector('#my-form');
 
 // Listen for form submit
 var itemlist = document.getElementById('items');
-let myobjs = [];
 myForm.addEventListener('submit', onSubmit);
+
+// Create event of removing itemlist
+itemlist.addEventListener('click', removeItem);
 
 // Created a submit function
 function onSubmit(e) {
@@ -27,10 +29,35 @@ function onSubmit(e) {
 //   adding li tag to list
   itemlist.appendChild(li);
 
-//   Creating obj
+// Create delete button element
+  var deletebtn = document.createElement('button');
+
+// Add classes to del button
+  deletebtn.className = 'delete';
+
+// Append text node
+  deletebtn.appendChild(document.createTextNode('delete'));
+
+// Append button to li
+  li.appendChild(deletebtn);
+
+// Creating obj
   const userDetails = {
-    name: document.getElementById('name').value,
-    email: document.getElementById('email').value
+  name: document.getElementById('name').value,
+  email: document.getElementById('email').value
 }
-  localStorage.setItem(newEmail.value, JSON.stringify(userDetails));
+  localStorage.setItem(userDetails.email, JSON.stringify(userDetails));
+}
+
+// Remove Item
+function removeItem(e) {
+    if(e.target.classList.contains('delete')) {
+        var li = e.target.parentElement;
+        itemlist.removeChild(li);
+        const userDetails = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value
+          }
+        localStorage.removeItem(userDetails.email);
+    }
 }
