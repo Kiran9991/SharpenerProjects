@@ -1,0 +1,10 @@
+the type error is we cannot assigned the new values to const variable type, 
+the syntax error we cannot declared the same identifier and 
+the reference error is we cannot access the identifiers before initialization
+1. type error example = const a = 12;
+a = 22;
+console.log(a)
+2. syntax error example = let a = 1
+let a = 2
+3. reference error = console.log(a)
+let a = 1
