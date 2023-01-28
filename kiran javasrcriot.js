@@ -584,7 +584,4 @@
 // const arr3 = [...arr, ...arr2]
 // console.log(arr3)
 
-
-
-
-
+console.log('kiran')
