@@ -1,61 +1,67 @@
-const form = document.getElementById('my-form');
 
-form.addEventListener('submit', onSubmitUserData);
+let submitbn = document.getElementById('submit');
+let listUser = document.getElementById('user');
 
-function onSubmitUserData(e) {
+submitbn.addEventListener('click', storeDetails);
+
+function storeDetails(e) {
     e.preventDefault();
-    showUserDetailOnScreen();
+
+    let name = document.getElementById('name').value;
+    let email = document.getElementById('emailId').value;
+    let phoneNo = document.getElementById('phoneNo').value;
+    let details = `${name} - ${email} - ${phoneNo}`;
+    let li = document.createElement('li');
+    let text = document.createTextNode(details);
+    
+    let userDetails = {
+        name,
+        email,
+        phoneNo
+    }
+
+    axios.post('https://crudcrud.com/api/5376493c746e49298fa1b3c0c792d057/AddingUserData', userDetails)
+    .then((response) => {
+        showUserDetails(response.data);
+        console.log(response.data)
+    });
 }
 
-function showUserDetailOnScreen() {
-    
-    let username = document.getElementById('name').value;
-    let useremail = document.getElementById('emailId').value;
-    let phoneNo = document.getElementById('phoneNo').value;
-    let listUser = document.getElementById('user');
-
-    const UserDetails = {
-        name:username,
-        email:useremail,
-        phonenumber:phoneNo
-    }
-    axios.post("https://crudcrud.com/api/335219c4258b4d6aa746b2b604876a20/AddingUserData", UserDetails)
-    .then((response) => {
-        console.log(response)
-        document.body.innerHTML = document.body.innerHTML+`<h4>${UserDetails.name} - ${UserDetails.email} - ${UserDetails.phonenumber}`
+window.addEventListener('DOMContentLoaded', () => {
+    axios.post('https://crudcrud.com/api/5376493c746e49298fa1b3c0c792d057/AddingUserData').then((response) => {
+        for(let i=0; i<response.data.length; i++) {
+            showUserDetails(response.data[i]);
+            document.body.innerHTML += text;
+        }
     })
-    .catch((err) => {
-        console.log(err)
-        document.body.innerHTML = document.body.innerHTML+'<h4>Something went wrong</h4>'
-    })
+})
 
+function showUserDetails(userDetails) {
     let li = document.createElement('li');
-    let deletebtn = document.createElement('input');
-    let editbtn = document.createElement('input');
+    li.textContent = userDetails.name + ' - '+userDetails.email+' - '+userDetails.phoneNo;
 
-    li.textContent = UserDetails.name+' - '+UserDetails.email+' - '+UserDetails.phonenumber;
-    
+    let deletebtn = document.createElement('input');
     deletebtn.type = 'button';
     deletebtn.value = 'delete';
-    
-    deletebtn.onclick = () => {
-        localStorage.removeItem(UserDetails.email)
-        listUser.removeChild(li)
-    }
 
+    let editbtn = document.createElement('input');
     editbtn.type = 'button';
     editbtn.value = 'edit';
-    editbtn.onclick = () => {
-        localStorage.removeItem(UserDetails.email)
-        listUser.removeChild(li)
-        document.getElementById('name').value = UserDetails.name
-        document.getElementById('emailId').value = UserDetails.email
-        document.getElementById('phoneNo').value = UserDetails.phonenumber
+
+    li.appendChild(editbtn);
+    li.appendChild(deletebtn);
+
+    deletebtn.onclick = () => {
+        listUser.removeChild(li);
+        localStorage.removeItem(userDetails.email)
     }
 
-    li.appendChild(deletebtn)
-    li.appendChild(editbtn)
+    editbtn.onclick = () => {
+        listUser.removeChild(li);
+        localStorage.removeItem(userDetails.email)
+        document.getElementById('name').value = userDetails.name;
+        document.getElementById('emailId').value = userDetails.email;
+        document.getElementById('phoneNo').value = userDetails.phoneNo;
+    }
     listUser.appendChild(li);
-
-    localStorage.setItem(UserDetails.email, JSON.stringify(UserDetails));
 }
