@@ -28,10 +28,9 @@ function storeDetails(e) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-    axios.post('https://crudcrud.com/api/5376493c746e49298fa1b3c0c792d057/AddingUserData').then((response) => {
+    axios.get('https://crudcrud.com/api/5376493c746e49298fa1b3c0c792d057/AddingUserData').then((response) => {
         for(let i=0; i<response.data.length; i++) {
             showUserDetails(response.data[i]);
-            document.body.innerHTML += text;
         }
     })
 })
