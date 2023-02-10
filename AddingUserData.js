@@ -57,7 +57,6 @@ function showUserDetails(userDetails) {
     deletebtn.onclick = () => {
         listUser.removeChild(li);
         deleteId(userDetails._id);
-        // localStorage.removeItem(userDetails.email)
     }
 
     editbtn.onclick = () => {
