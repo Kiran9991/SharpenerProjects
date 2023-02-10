@@ -47,9 +47,15 @@ function showUserDetails(userDetails) {
         axios.delete('https://crudcrud.com/api/ccb3c727473d4288a929ecf419ca0f2f/AddingUserData/'+userId)
         .then((res) => console.log(res))
     }
+
     let editbtn = document.createElement('input');
     editbtn.type = 'button';
     editbtn.value = 'edit';
+
+    function editId(userId) {
+        axios.put('https://crudcrud.com/api/ccb3c727473d4288a929ecf419ca0f2f/AddingUserData/'+userId)
+        .then((res) => console.log(res))
+    }
 
     li.appendChild(editbtn);
     li.appendChild(deletebtn);
@@ -61,7 +67,8 @@ function showUserDetails(userDetails) {
 
     editbtn.onclick = () => {
         listUser.removeChild(li);
-        localStorage.removeItem(userDetails.email)
+        editId(userDetails._id);
+        deleteId(userDetails._id);
         document.getElementById('name').value = userDetails.name;
         document.getElementById('emailId').value = userDetails.email;
         document.getElementById('phoneNo').value = userDetails.phoneNo;
