@@ -20,7 +20,7 @@ function storeDetails(e) {
         phoneNo
     }
 
-    axios.post('https://crudcrud.com/api/5376493c746e49298fa1b3c0c792d057/AddingUserData', userDetails)
+    axios.post('https://crudcrud.com/api/ccb3c727473d4288a929ecf419ca0f2f/AddingUserData', userDetails)
     .then((response) => {
         showUserDetails(response.data);
         console.log(response.data)
@@ -28,7 +28,7 @@ function storeDetails(e) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-    axios.get('https://crudcrud.com/api/5376493c746e49298fa1b3c0c792d057/AddingUserData').then((response) => {
+    axios.get('https://crudcrud.com/api/ccb3c727473d4288a929ecf419ca0f2f/AddingUserData').then((response) => {
         for(let i=0; i<response.data.length; i++) {
             showUserDetails(response.data[i]);
         }
@@ -43,6 +43,10 @@ function showUserDetails(userDetails) {
     deletebtn.type = 'button';
     deletebtn.value = 'delete';
 
+    function deleteId(userId) {
+        axios.delete('https://crudcrud.com/api/ccb3c727473d4288a929ecf419ca0f2f/AddingUserData/'+userId)
+        .then((res) => console.log(res))
+    }
     let editbtn = document.createElement('input');
     editbtn.type = 'button';
     editbtn.value = 'edit';
@@ -52,7 +56,8 @@ function showUserDetails(userDetails) {
 
     deletebtn.onclick = () => {
         listUser.removeChild(li);
-        localStorage.removeItem(userDetails.email)
+        deleteId(userDetails._id);
+        // localStorage.removeItem(userDetails.email)
     }
 
     editbtn.onclick = () => {
