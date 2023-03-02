@@ -18,27 +18,20 @@ async function storeItemsDetails(e) {
         productName,
         chooseCategory
     }
-    showItemDetails(sellingItemDetails)
 
-    await axios.post('https://crudcrud.com/api/98404c450c724016bcbb06589e6ca3eb/productDetails', sellingItemDetails)
-    .then((response) => {
-        showItemDetails(response.data);
-    })
-    .catch((err) => {
-        console.log(err)
-    })
-    }catch{
-        console.log('Products is not added')
+    let response = await axios.post('https://crudcrud.com/api/eb809e769f7b4c0db0f92cf5bfe7e864/productDetails', sellingItemDetails)
+    showItemDetails(response.data);
+    }catch(error){
+        console.log(error)
     }
 }
 
 window.addEventListener('DOMContentLoaded', async () => {
     try{
-        await axios.get('https://crudcrud.com/api/98404c450c724016bcbb06589e6ca3eb/productDetails').then((response) => {
+        let response = await axios.get('https://crudcrud.com/api/eb809e769f7b4c0db0f92cf5bfe7e864/productDetails')
         for(let i=0; i<response.data.length; i++) {
             showItemDetails(response.data[i]);
         }
-    })
     }catch(error) {
         console.log(error)
     }
@@ -54,8 +47,7 @@ function showItemDetails(sellingItemDetails) {
 
     async function deleteItemId(itemId) {
         try{
-            axios.delete(`https://crudcrud.com/api/98404c450c724016bcbb06589e6ca3eb/productDetails/${itemId}`)
-        .then((res) => console.log(res))
+            let response = await axios.delete(`https://crudcrud.com/api/eb809e769f7b4c0db0f92cf5bfe7e864/productDetails/${itemId}`)
         }catch(error) {
             console.log(error)
         }
